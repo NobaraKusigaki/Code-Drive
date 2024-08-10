@@ -11,27 +11,26 @@ import frc.robot.Constants;
 import frc.robot.applications.Calcs;
 
 public class DriveSubsystem extends SubsystemBase {
-    private VictorSPX L1 = new VictorSPX(Constants.MOTOR_L1);
-    private VictorSPX L2 = new VictorSPX(Constants.MOTOR_L2);
-    private VictorSPX R1 = new VictorSPX(Constants.MOTOR_R1);
-    private VictorSPX R2 = new VictorSPX(Constants.MOTOR_R2);
+    private Calcs calcs_driver;
 
+    private final VictorSPX L1 = new VictorSPX(Constants.MOTOR_L1);
+    private final VictorSPX L2 = new VictorSPX(Constants.MOTOR_L2);
+    private final VictorSPX R1 = new VictorSPX(Constants.MOTOR_R1);
+    private final VictorSPX R2 = new VictorSPX(Constants.MOTOR_R2);
 
    // public AHRS angular = new AHRS(SPI.Port.kMXP);
     double motors[] = {0,0};
-    private Calcs calcs_driver;
-
 
     public DriveSubsystem() {
         motorsInit();
     }
 
-    public void driveCommand(double lt,double rt , double L_stickY, double L_stickX,
-                             double R_stickY,double R_stickX, double spd){
-        calcs_driver = new Calcs(L_stickY,L_stickX,R_stickY,R_stickX,lt,rt);
+    public void driveCommand(double lt,double rt , double L_stickY, double L_stickX, double R_stickY,double R_stickX, double spd){
         motors[0]*=spd;
         motors[1]*= spd;
         setMotors(motors);
+
+        calcs_driver = new Calcs(L_stickY,L_stickX,R_stickY,R_stickX,lt,rt);
     }
 
     @Override

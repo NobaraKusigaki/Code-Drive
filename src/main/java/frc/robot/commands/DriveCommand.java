@@ -59,7 +59,14 @@ public class DriveCommand extends Command {
 
     }
 
-    public void ifB(boolean a, boolean b, boolean x){
-    this.spd = b ? 0.25 : a ? 0.50 : x ? 1 : spd;
+    public void ifB(boolean a,boolean b, boolean x){
+        if (b) {
+            this.spd = 0.25;
+        } else if (a) {
+            this.spd = 0.5;
+        } else if (x) {
+            this.spd = 1;
+        }
+
     }
 }
