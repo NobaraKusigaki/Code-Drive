@@ -18,7 +18,7 @@ public class DriveSubsystem extends SubsystemBase {
     private final VictorSPX R1 = new VictorSPX(Constants.MOTOR_R1);
     private final VictorSPX R2 = new VictorSPX(Constants.MOTOR_R2);
 
-   // public AHRS angular = new AHRS(SPI.Port.kMXP);
+    // public AHRS angular = new AHRS(SPI.Port.kMXP);
     double motors[] = {0,0};
 
     public DriveSubsystem() {
@@ -54,7 +54,7 @@ public class DriveSubsystem extends SubsystemBase {
         return x;
     }
 
-        private void motorsInit(){
+    private void motorsInit(){
         this.L2.follow(L1);
         this.R2.follow(R1);
         this.L1.setInverted(false);
@@ -65,7 +65,7 @@ public class DriveSubsystem extends SubsystemBase {
         this.R1.setNeutralMode(NeutralMode.Brake);
 
 
-}
+    }
 
 
 }
