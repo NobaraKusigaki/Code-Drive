@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.applications.Calcs;
@@ -14,6 +15,9 @@ public class DriveCommand extends Command {
     private double L_stickY, L_stickX, R_stickY, R_stickX,lt, rt;
     private double spd=1;
     private int pov;
+    public boolean an_L = true;
+    public boolean an_R = true;
+    boolean a,b,x;
 
     public DriveCommand(Joystick joy, DriveSubsystem subDrive) {
         this.subDrive = subDrive;
@@ -29,9 +33,9 @@ public class DriveCommand extends Command {
 
     @Override
     public void execute() {
-    boolean a = joy.getRawButton(Constants.BNT_A);
-    boolean b = joy.getRawButton(Constants.BNT_B);
-    boolean x = joy.getRawButton(Constants.BNT_X);
+    a = joy.getRawButton(Constants.BNT_A);
+    b = joy.getRawButton(Constants.BNT_B);
+    x = joy.getRawButton(Constants.BNT_X);
     this.R_stickX = joy.getRawAxis(Constants.RIGHT_X);
     this.R_stickY = joy.getRawAxis(Constants.RIGHT_Y);
     this.L_stickX = joy.getRawAxis(Constants.LEFT_X);
@@ -42,9 +46,18 @@ public class DriveCommand extends Command {
 
     if(pov == -1){
     subDrive.driveCommand(R_stickX,R_stickY,L_stickX,L_stickY,rt,lt,spd);
+
     } else{
         subDrive.setMotors(Calcs.calcPov(pov,spd));
     }
+        SmartDashboard.getBoolean("bnt B", b);
+        SmartDashboard.getBoolean("bnt A", a);
+        SmartDashboard.getBoolean("bnt X", x);
+        SmartDashboard.putNumber("spd", spd);
+        SmartDashboard.putNumber("LT", lt);
+        SmartDashboard.putNumber("RT", rt);
+        SmartDashboard.putBoolean("analog_left", an_L);
+        SmartDashboard.putBoolean("analog_right", an_R);
 
     }
 

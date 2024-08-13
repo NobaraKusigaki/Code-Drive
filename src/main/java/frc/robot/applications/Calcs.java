@@ -10,8 +10,9 @@ public class Calcs {
     public double lt, rt;
     public double L_stickY, L_stickX, R_stickY, R_stickX;
     public double spd = 1;
-    private int pov;
+    public int pov;
 
+    public boolean an_L, an_R;
 
     public Calcs(double L_stickY, double L_stickX, double R_stickY, double R_stickX, double lt, double rt) {
         this.L_stickX = L_stickX;
@@ -21,16 +22,25 @@ public class Calcs {
         this.R_stickX = R_stickX;
         this.R_stickY = -R_stickY;
 
+        analogicValues();
+
     }
 
         public void analogicValues () {
             this.mag1 = Math.hypot(L_stickX, L_stickY);
             this.mag2 = Math.hypot(R_stickX, R_stickY);
-            this.seno1 = L_stickY / mag1;
-            this.seno2 = R_stickY / mag2;
-        }
+            this.seno1 = mag1 > 0.04 ? L_stickY / mag1 : 0;
+            this.seno2 = mag2 > 0.04 ? R_stickY / mag2 : 0;
 
+            an_L = this.mag1 > 0.04;
+            an_R = this.mag2 > 0.04;
 
+            if (an_L) {
+                Left_analog();
+            } else if (an_R) {
+                Right_analogic();
+            }
+    }
         public void Left_analog () {
             double motors[] = new double[2];
             seno1 = L_stickY / mag1;
@@ -61,43 +71,30 @@ public class Calcs {
 
         public void Right_analogic () {
             double motors[] = new double[2];
-            seno2 = R_stickY / mag2;
+                seno2 = R_stickY / mag2;
 
-            //quad1. x>0 e y>0
-            if (R_stickX > 0 && R_stickY > 0) {
-                motors[0] = (-2 * seno2 + 1) * mag2;
-                motors[1] = -mag2;
-            }
-            //quad2. x<0 e y>0
-            if (R_stickX < 0 && R_stickY > 0) {
-                motors[0] = -mag2;
-                motors[1] = (-2 * seno2 + 1) * mag2;
-            }
-            //quad3. x<0 e y<0
-            if (R_stickX < 0 && R_stickY < 0) {
-                motors[0] = mag2;
-                motors[1] = (-2 * seno2 - 1) * mag2;
-            }
-            //quad4. x>0 e y<0
-            if (R_stickX > 0 && R_stickY < 0) {
-                motors[0] = (-2 * seno2 - 1) * mag2;
-                motors[1] = mag2;
-            }
+                //quad1. x>0 e y>0
+                if (R_stickX > 0 && R_stickY > 0) {
+                    motors[0] = (-2 * seno2 + 1) * mag2;
+                    motors[1] = -mag2;
+                }
+                //quad2. x<0 e y>0
+                if (R_stickX < 0 && R_stickY > 0) {
+                    motors[0] = -mag2;
+                    motors[1] = (-2 * seno2 + 1) * mag2;
+                }
+                //quad3. x<0 e y<0
+                if (R_stickX < 0 && R_stickY < 0) {
+                    motors[0] = mag2;
+                    motors[1] = (-2 * seno2 - 1) * mag2;
+                }
+                //quad4. x>0 e y<0
+                if (R_stickX > 0 && R_stickY < 0) {
+                    motors[0] = (-2 * seno2 - 1) * mag2;
+                    motors[1] = mag2;
+                }
 
-
-        }
-        public void activity_analog(){
-            if(mag1 <= 0.04){
-                L_stickX = 0;
-                L_stickY = 0;
-                mag1 = 0;
             }
-            if(mag2 <= 0.04){
-                R_stickX = 0;
-                R_stickY= 0;
-                mag2 = 0;
-            }
-        }
 
         public void axis_lt(){
         double motors [] = new double[2];

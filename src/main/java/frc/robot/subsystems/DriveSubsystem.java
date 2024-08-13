@@ -31,6 +31,7 @@ public class DriveSubsystem extends SubsystemBase {
         setMotors(motors);
 
         calcs_driver = new Calcs(L_stickY,L_stickX,R_stickY,R_stickX,lt,rt);
+
     }
 
     @Override
