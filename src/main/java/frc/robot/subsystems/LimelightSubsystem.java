@@ -1,10 +1,11 @@
 package frc.robot.subsystems;
 
 
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
 
@@ -15,12 +16,31 @@ private NetworkTableEntry tx;
 private NetworkTableEntry ty;
 private NetworkTableEntry area;
 
+private GenericEntry shuffleTx;
+private GenericEntry shuffleTy;
+private GenericEntry shuffleA;
+
 
     public LimelightSubsystem() {
       table = NetworkTableInstance.getDefault().getTable("limelight");
       tx = table.getEntry("tx");
       ty = table.getEntry("ty");
       area = table.getEntry("ta");
+
+    shuffleTx = Shuffleboard.getTab("Lime Data")
+            .add("Limelight X", 0.0)
+            .withWidget("TextView")
+            .getEntry();
+    shuffleTy = Shuffleboard.getTab("Lime Data")
+            .add("Limelight Y", 0.0)
+            .withWidget("TextView")
+            .getEntry();
+
+    shuffleA = Shuffleboard.getTab("Lime Data")
+            .add("Limelight Area", 0.0)
+            .withWidget("TextView")
+            .getEntry();
+
     }
 
     public double getX() {
@@ -37,9 +57,9 @@ private NetworkTableEntry area;
 
 @Override
     public void periodic(){
-    SmartDashboard.putNumber("LimelightX", getX());
-    SmartDashboard.putNumber("LimelightY", getY());
-    SmartDashboard.putNumber("LimelightArea", getArea());
+    shuffleTx.setDouble(getX());
+    shuffleTy.setDouble(getY());
+    shuffleA.setDouble(getArea());
 }
 
 

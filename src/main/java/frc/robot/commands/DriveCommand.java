@@ -50,9 +50,9 @@ public class DriveCommand extends Command {
     } else{
         subDrive.setMotors(Calcs.calcPov(pov,spd));
     }
-        SmartDashboard.getBoolean("bnt B", b);
-        SmartDashboard.getBoolean("bnt A", a);
-        SmartDashboard.getBoolean("bnt X", x);
+        SmartDashboard.putBoolean("bnt B", b);
+        SmartDashboard.putBoolean("bnt A", a);
+        SmartDashboard.putBoolean("bnt X", x);
         SmartDashboard.putNumber("spd", spd);
         SmartDashboard.putNumber("LT", lt);
         SmartDashboard.putNumber("RT", rt);

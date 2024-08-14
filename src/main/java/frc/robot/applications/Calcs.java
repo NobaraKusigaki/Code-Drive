@@ -41,6 +41,7 @@ public class Calcs {
                 Right_analogic();
             }
     }
+    
         public void Left_analog () {
             double motors[] = new double[2];
             seno1 = L_stickY / mag1;
