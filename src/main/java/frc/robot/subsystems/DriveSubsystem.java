@@ -17,20 +17,23 @@ public class DriveSubsystem extends SubsystemBase {
     private final VictorSPX L2 = new VictorSPX(Constants.MOTOR_L2);
     private final VictorSPX R1 = new VictorSPX(Constants.MOTOR_R1);
     private final VictorSPX R2 = new VictorSPX(Constants.MOTOR_R2);
-
+    double [] motors;
     // public AHRS angular = new AHRS(SPI.Port.kMXP);
-    double motors[] = {0,0};
+
 
     public DriveSubsystem() {
         motorsInit();
     }
 
     public void driveCommand(double lt,double rt , double L_stickY, double L_stickX, double R_stickY,double R_stickX, double spd){
+        calcs_driver = new Calcs(L_stickY,L_stickX,R_stickY,R_stickX,lt,rt);
+        motors = calcs_driver.tank();
         motors[0]*=spd;
         motors[1]*= spd;
+        minPower(motors[0], spd);
+        minPower(motors[1],spd);
         setMotors(motors);
 
-        calcs_driver = new Calcs(L_stickY,L_stickX,R_stickY,R_stickX,lt,rt);
 
     }
 

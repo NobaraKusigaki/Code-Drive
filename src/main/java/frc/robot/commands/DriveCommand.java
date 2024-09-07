@@ -15,8 +15,6 @@ public class DriveCommand extends Command {
     private double L_stickY, L_stickX, R_stickY, R_stickX,lt, rt;
     private double spd=1;
     private int pov;
-    public boolean an_L = true;
-    public boolean an_R = true;
     boolean a,b,x;
 
     public DriveCommand(Joystick joy, DriveSubsystem subDrive) {
@@ -56,9 +54,6 @@ public class DriveCommand extends Command {
         SmartDashboard.putNumber("spd", spd);
         SmartDashboard.putNumber("LT", lt);
         SmartDashboard.putNumber("RT", rt);
-        SmartDashboard.putBoolean("analog_left", an_L);
-        SmartDashboard.putBoolean("analog_right", an_R);
-
     }
 
     @Override

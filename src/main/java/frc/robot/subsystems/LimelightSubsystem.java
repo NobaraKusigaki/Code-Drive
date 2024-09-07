@@ -42,7 +42,9 @@ private GenericEntry shuffleA;
             .getEntry();
 
     }
-
+    public boolean getIfLime(){
+        return getArea() > 0 ? true : false;
+}
     public double getX() {
         return tx.getDouble(0);
     }
@@ -53,6 +55,9 @@ private GenericEntry shuffleA;
 
     public double getArea() {
         return area.getDouble(0);
+    }
+    public void setPipe(int pipe){
+        table.getEntry("pipeline").setNumber(pipe);
     }
 
 @Override
