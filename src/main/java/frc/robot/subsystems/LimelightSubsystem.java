@@ -45,6 +45,17 @@ private GenericEntry shuffleA;
     public boolean getIfLime(){
         return getArea() > 0 ? true : false;
 }
+
+public boolean tagDetected(){
+        return getArea() > 0 && table.getEntry("pipeline")
+                .getDouble(0) == 1;
+    }
+
+    public boolean tapeDetected(){
+        return getArea() > 0 && table.getEntry("pipeline")
+                .getDouble(0) == 0;
+    }
+
     public double getX() {
         return tx.getDouble(0);
     }
@@ -69,4 +80,6 @@ private GenericEntry shuffleA;
 
 
 }
-
+//dont forget
+// pipe: 0 - retroflexive tape
+// pipe: 1 - apriltag

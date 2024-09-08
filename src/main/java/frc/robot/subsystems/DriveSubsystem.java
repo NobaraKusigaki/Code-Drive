@@ -13,6 +13,7 @@ import frc.robot.applications.Calcs;
 public class DriveSubsystem extends SubsystemBase {
     private Calcs calcs_driver;
 
+
     private final VictorSPX L1 = new VictorSPX(Constants.MOTOR_L1);
     private final VictorSPX L2 = new VictorSPX(Constants.MOTOR_L2);
     private final VictorSPX R1 = new VictorSPX(Constants.MOTOR_R1);
