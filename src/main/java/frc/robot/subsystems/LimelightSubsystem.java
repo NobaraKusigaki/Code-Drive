@@ -7,10 +7,13 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 
 public class LimelightSubsystem extends SubsystemBase {
 double tt = LimelightHelpers.getTX("");
+
+
 private NetworkTable table;
 private NetworkTableEntry tx;
 private NetworkTableEntry ty;
@@ -42,19 +45,6 @@ private GenericEntry shuffleA;
             .getEntry();
 
     }
-    public boolean getIfLime(){
-        return getArea() > 0 ? true : false;
-}
-
-public boolean tagDetected(){
-        return getArea() > 0 && table.getEntry("pipeline")
-                .getDouble(0) == 1;
-    }
-
-    public boolean tapeDetected(){
-        return getArea() > 0 && table.getEntry("pipeline")
-                .getDouble(0) == 0;
-    }
 
     public double getX() {
         return tx.getDouble(0);
@@ -70,6 +60,23 @@ public boolean tagDetected(){
     public void setPipe(int pipe){
         table.getEntry("pipeline").setNumber(pipe);
     }
+    public boolean getIfLime(){
+        return getArea() > 0 ? true : false;
+    }
+
+    public boolean tagDetected(){
+        return getArea() > 0 && table.getEntry("pipeline")
+                .getDouble(0) == 1;
+    }
+
+    public boolean tapeDetected(){
+        return getArea() > 0 && table.getEntry("pipeline")
+                .getDouble(0) == 0;
+    }
+    public double getDistAdjust(){
+        return -Constants.KpDist * getArea();
+    }
+
 
 @Override
     public void periodic(){

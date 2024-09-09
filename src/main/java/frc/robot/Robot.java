@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 
 
@@ -18,14 +19,19 @@ public class Robot extends TimedRobot {
     private LimelightSubsystem limesub;
     private RobotContainer robotContainer;
     private Joystick joy;
+    private DriveSubsystem subdrive;
 
 
     @Override
     public void robotInit() {
+        limesub = new LimelightSubsystem();
+        subdrive = new DriveSubsystem();
         robotContainer = new RobotContainer();
 
         for(int port = 5800; port <= 5809; port++){
             PortForwarder.add(port, "limelight.local", port);
+
+
         }
     }
     
@@ -87,20 +93,6 @@ public class Robot extends TimedRobot {
     /** This method is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
-        double distanceAdjust;
-        double disterror;
-        double steeringAdjust;
-        double Kpdist;
-        double steringAdjust;
-
-        if(limesub.tagDetected()){
-        ////////////////////////////////////////////
-            //////////////////////////
-        }
-        if (limesub.tapeDetected()){
-            ///////////////////////////////
-            ////////////////////////////
-        }
 
     }
 

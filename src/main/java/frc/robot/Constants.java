@@ -19,16 +19,24 @@ public final class Constants
     public static final int MOTOR_L2 = 0;
     public static final int MOTOR_R1 = 0;
     public static final int MOTOR_R2 = 0;
-    public static final int BNT_A = 0;
-    public static final int BNT_B = 0;
-    public static final int BNT_X = 0;
+
+    public static final int BNT_A = 1;
+    public static final int BNT_B = 2;
+    public static final int BNT_X = 3;
+
     public static final int LT = 0;
     public static final int RT = 0;
+
     public static final int RIGHT_X = 0 ;
     public static final int RIGHT_Y = 0 ;
     public static final int LEFT_X = 0;
     public static final int LEFT_Y = 0;
+
     public static final int JOY_PORT = 0 ;
+
+    public static final double KpDist = 0.1;
+    public static final double Kp = 0.03;
+
 
     public static class OperatorConstants
     {
