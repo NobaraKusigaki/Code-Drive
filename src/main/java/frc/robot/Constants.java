@@ -35,7 +35,7 @@ public final class Constants
     public static final int JOY_PORT = 0 ;
 
     public static final double KpDist = 0.1;
-    public static final double Kp = 0.03;
+
 
 
     public static class OperatorConstants

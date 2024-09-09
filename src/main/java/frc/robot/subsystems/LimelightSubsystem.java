@@ -74,7 +74,8 @@ private GenericEntry shuffleA;
                 .getDouble(0) == 0;
     }
     public double getDistAdjust(){
-        return -Constants.KpDist * getArea();
+        return Constants.KpDist * getArea();
+
     }
 
 

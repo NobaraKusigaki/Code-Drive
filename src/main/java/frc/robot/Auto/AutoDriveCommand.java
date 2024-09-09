@@ -27,13 +27,28 @@ public class AutoDriveCommand extends Command {
     public void execute() {
     if (limesub.tapeDetected()){
     distErro_tape = limesub.getDistAdjust();
-    //subdrive.
 
-    } else if(limesub.tagDetected()){
+    if(distErro_tape < 0){
+        subdrive.setMotors(new double[] {-0.40, 0.40});
+    } else {
+        subdrive.setMotors(new double[] {0.40, 0.40});
+    }
+        }
+    if(limesub.tagDetected()){
         distErro_tag = limesub.getDistAdjust();
-        //subdrive.
+
+    if(limesub.getX() > 0){
+        subdrive.setMotors(new double[] {0.40, -0.40});
+    } else if(limesub.getX() < 0){
+        subdrive.setMotors(new double[] {-0.40, 0.40});
     }
 
+        if (distErro_tag > 80) {
+            subdrive.setMotors(new double[]{0.40, 0.40});
+        } else {
+            subdrive.setMotors(new double[]{0.0, 0.0});
+        }
+    }
 
 
     }
@@ -46,6 +61,6 @@ public class AutoDriveCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-
+        subdrive.setMotors(new double[]{0.0, 0.0});
     }
 }
