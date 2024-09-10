@@ -6,7 +6,6 @@ public class Calcs {
     private double seno2 = 0;
     private double mag1 = 0;
     private double mag2 = 0;
-
     public double lt, rt;
     public double L_stickY, L_stickX, R_stickY, R_stickX;
     public double spd = 1;
@@ -23,7 +22,6 @@ public class Calcs {
         analogicValues();
 
     }
-
     public void analogicValues() {
         this.mag1 = Math.hypot(L_stickX, L_stickY);
         this.mag2 = Math.hypot(R_stickX, R_stickY);

@@ -25,11 +25,12 @@ public class AutoDriveCommand extends Command {
 
     @Override
     public void execute() {
-    if (limesub.tapeDetected()){
+
+  if (limesub.tapeDetected()){
     distErro_tape = limesub.getDistAdjust();
 
     if(distErro_tape < 0){
-        subdrive.setMotors(new double[] {-0.40, 0.40});
+        subdrive.setMotors(new double[] {-0.40, -0.40});
     } else {
         subdrive.setMotors(new double[] {0.40, 0.40});
     }
@@ -42,14 +43,12 @@ public class AutoDriveCommand extends Command {
     } else if(limesub.getX() < 0){
         subdrive.setMotors(new double[] {-0.40, 0.40});
     }
-
-        if (distErro_tag > 80) {
+    if (distErro_tag > 80) {
             subdrive.setMotors(new double[]{0.40, 0.40});
         } else {
             subdrive.setMotors(new double[]{0.0, 0.0});
         }
     }
-
 
     }
 

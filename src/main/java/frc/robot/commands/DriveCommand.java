@@ -10,7 +10,7 @@ import frc.robot.subsystems.DriveSubsystem;
 
 public class DriveCommand extends Command {
     private final DriveSubsystem subDrive;
-    private Joystick joy;
+    private final Joystick joy;
 
     private double L_stickY, L_stickX, R_stickY, R_stickX,lt, rt;
     private double spd=1;
@@ -43,7 +43,7 @@ public class DriveCommand extends Command {
     this.pov = joy.getPOV();
 
     if(pov == -1){
-    subDrive.driveCommand(R_stickX,R_stickY,L_stickX,L_stickY,rt,lt,spd);
+    subDrive.driveCommand(R_stickX,-R_stickY,L_stickX,-L_stickY,rt,lt,spd);
 
     } else{
         subDrive.setMotors(Calcs.calcPov(pov,spd));

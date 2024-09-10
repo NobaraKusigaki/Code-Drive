@@ -14,14 +14,14 @@ public class LimelightSubsystem extends SubsystemBase {
 double tt = LimelightHelpers.getTX("");
 
 
-private NetworkTable table;
-private NetworkTableEntry tx;
-private NetworkTableEntry ty;
-private NetworkTableEntry area;
+private final NetworkTable table;
+private final NetworkTableEntry tx;
+private final NetworkTableEntry ty;
+private final NetworkTableEntry area;
 
-private GenericEntry shuffleTx;
-private GenericEntry shuffleTy;
-private GenericEntry shuffleA;
+private final GenericEntry shuffleTx;
+private final GenericEntry shuffleTy;
+private final GenericEntry shuffleA;
 
 
     public LimelightSubsystem() {
@@ -61,7 +61,7 @@ private GenericEntry shuffleA;
         table.getEntry("pipeline").setNumber(pipe);
     }
     public boolean getIfLime(){
-        return getArea() > 0 ? true : false;
+        return getArea() > 0;
     }
 
     public boolean tagDetected(){
