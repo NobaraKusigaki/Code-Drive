@@ -6,6 +6,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
@@ -13,37 +14,18 @@ import frc.robot.LimelightHelpers;
 public class LimelightSubsystem extends SubsystemBase {
 double tt = LimelightHelpers.getTX("");
 
-
 private final NetworkTable table;
 private final NetworkTableEntry tx;
 private final NetworkTableEntry ty;
 private final NetworkTableEntry area;
 
-private final GenericEntry shuffleTx;
-private final GenericEntry shuffleTy;
-private final GenericEntry shuffleA;
-
 
     public LimelightSubsystem() {
-      table = NetworkTableInstance.getDefault().getTable("limelight");
-      tx = table.getEntry("tx");
-      ty = table.getEntry("ty");
-      area = table.getEntry("ta");
-
-    shuffleTx = Shuffleboard.getTab("Lime Data")
-            .add("Limelight X", 0.0)
-            .withWidget("TextView")
-            .getEntry();
-    shuffleTy = Shuffleboard.getTab("Lime Data")
-            .add("Limelight Y", 0.0)
-            .withWidget("TextView")
-            .getEntry();
-
-    shuffleA = Shuffleboard.getTab("Lime Data")
-            .add("Limelight Area", 0.0)
-            .withWidget("TextView")
-            .getEntry();
-
+        table = NetworkTableInstance.getDefault().getTable("limelight");
+         tx = table.getEntry("tx");
+         ty = table.getEntry("ty");
+         area = table.getEntry("ta");
+         SmartUpdate();
     }
 
     public double getX() {
@@ -78,12 +60,14 @@ private final GenericEntry shuffleA;
 
     }
 
-
+    public void SmartUpdate(){
+        SmartDashboard.putNumber("x", getX());
+        SmartDashboard.putNumber("y", getY());
+        SmartDashboard.putNumber("area", getArea());
+    }
 @Override
     public void periodic(){
-    shuffleTx.setDouble(getX());
-    shuffleTy.setDouble(getY());
-    shuffleA.setDouble(getArea());
+
 }
 
 

@@ -13,7 +13,6 @@ import frc.robot.applications.Calcs;
 public class DriveSubsystem extends SubsystemBase {
     private Calcs calcs_driver;
 
-
     private final VictorSPX L1 = new VictorSPX(Constants.MOTOR_L1);
     private final VictorSPX L2 = new VictorSPX(Constants.MOTOR_L2);
     private final VictorSPX R1 = new VictorSPX(Constants.MOTOR_R1);
@@ -47,7 +46,9 @@ public class DriveSubsystem extends SubsystemBase {
 
     public void setMotors(double[] motors){
         this.L1.set(ControlMode.PercentOutput, this.motors[0]);
+        this.L2.set(ControlMode.PercentOutput, this.motors[0]);
         this.R1.set(ControlMode.PercentOutput, this.motors[1]);
+        this.R2.set(ControlMode.PercentOutput, this.motors[1]);
     }
 
     public double minPower(double x, double y){
@@ -60,14 +61,18 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     private void motorsInit(){
-        this.L2.follow(L1);
-        this.R2.follow(R1);
         this.L1.setInverted(false);
+        this.L2.setInverted(false);
         this.R1.setInverted(true);
+        this.R2.setInverted(true);
         this.L1.configNeutralDeadband(0.04);
+        this.L2.configNeutralDeadband(0.04);
         this.R1.configNeutralDeadband(0.04);
+        this.R2.configNeutralDeadband(0.04);
         this.L1.setNeutralMode(NeutralMode.Brake);
+        this.L2.setNeutralMode(NeutralMode.Brake);
         this.R1.setNeutralMode(NeutralMode.Brake);
+        this.R2.setNeutralMode(NeutralMode.Brake);
 
 
     }

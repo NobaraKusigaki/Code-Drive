@@ -11,7 +11,6 @@ import frc.robot.subsystems.DriveSubsystem;
 public class DriveCommand extends Command {
     private final DriveSubsystem subDrive;
     private final Joystick joy;
-
     private double L_stickY, L_stickX, R_stickY, R_stickX,lt, rt;
     private double spd=1;
     private int pov;
@@ -23,7 +22,6 @@ public class DriveCommand extends Command {
         addRequirements(subDrive);
     }
 
-
     @Override
     public void initialize() {
 
@@ -31,9 +29,12 @@ public class DriveCommand extends Command {
 
     @Override
     public void execute() {
+    Dashboard();
     a = joy.getRawButton(Constants.BNT_A);
     b = joy.getRawButton(Constants.BNT_B);
     x = joy.getRawButton(Constants.BNT_X);
+    ifB();
+
     this.R_stickX = joy.getRawAxis(Constants.RIGHT_X);
     this.R_stickY = joy.getRawAxis(Constants.RIGHT_Y);
     this.L_stickX = joy.getRawAxis(Constants.LEFT_X);
@@ -43,17 +44,12 @@ public class DriveCommand extends Command {
     this.pov = joy.getPOV();
 
     if(pov == -1){
-    subDrive.driveCommand(R_stickX,-R_stickY,L_stickX,-L_stickY,rt,lt,spd);
+    subDrive.driveCommand(R_stickX,R_stickY,L_stickY,L_stickX,rt,lt,spd);
 
     } else{
         subDrive.setMotors(Calcs.calcPov(pov,spd));
     }
-        SmartDashboard.putBoolean("bnt B", b);
-        SmartDashboard.putBoolean("bnt A", a);
-        SmartDashboard.putBoolean("bnt X", x);
-        SmartDashboard.putNumber("spd", spd);
-        SmartDashboard.putNumber("LT", lt);
-        SmartDashboard.putNumber("RT", rt);
+
     }
 
     @Override
@@ -67,7 +63,7 @@ public class DriveCommand extends Command {
 
     }
 
-    public void ifB(boolean a,boolean b, boolean x){
+    public void ifB(){
         if (b) {
             this.spd = 0.25;
         } else if (a) {
@@ -76,5 +72,17 @@ public class DriveCommand extends Command {
             this.spd = 1;
         }
 
+    }
+    public void Dashboard(){
+        SmartDashboard.putBoolean("bnt B", b);
+        SmartDashboard.putBoolean("bnt A", a);
+        SmartDashboard.putBoolean("bnt X", x);
+        SmartDashboard.putNumber("spd", spd);
+        SmartDashboard.putNumber("LT", lt);
+        SmartDashboard.putNumber("RT", rt);
+        SmartDashboard.putNumber("L_X", L_stickX);
+        SmartDashboard.putNumber("L_Y", L_stickY);
+        SmartDashboard.putNumber("R_X", R_stickX);
+        SmartDashboard.putNumber("R_Y", R_stickY);
     }
 }

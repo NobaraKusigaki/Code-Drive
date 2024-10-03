@@ -9,8 +9,8 @@ public class AutoDriveCommand extends Command {
     private final DriveSubsystem subdrive;
     private final LimelightSubsystem limesub;
 
-    double distErro_tape;
-    double distErro_tag;
+    double distErr_tape;
+    double distErr_tag;
 
     public AutoDriveCommand(DriveSubsystem subdrive, LimelightSubsystem limesub) {
         this.subdrive = subdrive;
@@ -27,23 +27,23 @@ public class AutoDriveCommand extends Command {
     public void execute() {
 
   if (limesub.tapeDetected()){
-    distErro_tape = limesub.getDistAdjust();
+    distErr_tape = limesub.getDistAdjust();
 
-    if(distErro_tape < 0){
+    if(distErr_tape < 0){
         subdrive.setMotors(new double[] {-0.40, -0.40});
     } else {
         subdrive.setMotors(new double[] {0.40, 0.40});
     }
         }
     if(limesub.tagDetected()){
-        distErro_tag = limesub.getDistAdjust();
+        distErr_tag = limesub.getDistAdjust();
 
     if(limesub.getX() > 0){
         subdrive.setMotors(new double[] {0.40, -0.40});
     } else if(limesub.getX() < 0){
         subdrive.setMotors(new double[] {-0.40, 0.40});
     }
-    if (distErro_tag > 80) {
+    if (distErr_tag > 80) {
             subdrive.setMotors(new double[]{0.40, 0.40});
         } else {
             subdrive.setMotors(new double[]{0.0, 0.0});

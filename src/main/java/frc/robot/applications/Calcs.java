@@ -19,7 +19,7 @@ public class Calcs {
         this.rt = rt;
         this.R_stickX = R_stickX;
         this.R_stickY = -R_stickY;
-        analogicValues();
+
 
     }
     public void analogicValues() {
@@ -27,11 +27,26 @@ public class Calcs {
         this.mag2 = Math.hypot(R_stickX, R_stickY);
         this.seno1 = mag1 > 0.04 ? L_stickY / mag1 : 0;
         this.seno2 = mag2 > 0.04 ? R_stickY / mag2 : 0;
+        this.lt = -lt;
     }
+public void activityAnalog(){
+        if(mag1 <0.04){
+            L_stickY = 0;
+            L_stickX = 0;
+            mag1 = 0;
 
+        } else if(mag2 < 0.04){
+            R_stickY = 0;
+            R_stickX = 0;
+            mag2 = 0;
+
+        }
+}
 
     public double[] tank() {
-        double motors[] = new double[2];
+        analogicValues();
+        activityAnalog();
+        double[] motors = new double[2];
         if (lt != 0) {
             lt *= spd;
         }
@@ -55,7 +70,7 @@ public class Calcs {
             motors[1] = rt * spd;
         }
 
-        seno1 = L_stickY / mag1; // left analogic
+         // left analogic
         //quad1. x> 0 e y>0
         if (L_stickX > 0 && L_stickY >= 0) {
             motors[0] = mag1;
@@ -83,8 +98,7 @@ public class Calcs {
 
     public void Right_analogic() {
         double motors[] = new double[2];
-        seno2 = R_stickY / mag2;
-
+        seno1 = L_stickY / mag1;
         //quad1. x>0 e y>0
         if (R_stickX > 0 && R_stickY > 0) {
             motors[0] = (-2 * seno2 + 1) * mag2;
