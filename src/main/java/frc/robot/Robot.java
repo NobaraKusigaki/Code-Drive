@@ -1,17 +1,14 @@
 // Copyright (c) FIRST and other WPILib contributors.
-
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
 
-import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.LimelightSubsystem;
 
 
 public class Robot extends TimedRobot {
@@ -19,23 +16,20 @@ public class Robot extends TimedRobot {
     private LimelightSubsystem limesub;
     private RobotContainer robotContainer;
     private Joystick joy;
-    private DriveSubsystem subdrive;
+    private DriveSubsystem subDrive;
 
 
     @Override
     public void robotInit() {
         limesub = new LimelightSubsystem();
-        subdrive = new DriveSubsystem();
+        subDrive = new DriveSubsystem();
         robotContainer = new RobotContainer();
+        joy = new Joystick(0);
 
-        for(int port = 5800; port <= 5809; port++){
-            PortForwarder.add(port, "limelight.local", port);
+        autonomousCommand = robotContainer.getAutonomousCommand();
 
-
-        }
     }
-    
-    
+
 
     @Override
     public void robotPeriodic()
@@ -46,36 +40,36 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
     }
-    
-    
+
+
     /** This method is called once each time the robot enters Disabled mode. */
     @Override
     public void disabledInit() {}
-    
-    
+
+
     @Override
     public void disabledPeriodic() {}
-    
-    
+
+
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit()
     {
         //autonomousCommand = robotContainer.getAutonomousCommand();
-        
+
         // schedule the autonomous command (example)
         if (autonomousCommand != null)
         {
             autonomousCommand.schedule();
         }
     }
-    
-    
+
+
     /** This method is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {}
-    
-    
+
+
     @Override
     public void teleopInit()
     {
@@ -88,8 +82,8 @@ public class Robot extends TimedRobot {
             autonomousCommand.cancel();
         }
     }
-    
-    
+
+
     /** This method is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
@@ -102,18 +96,18 @@ public class Robot extends TimedRobot {
         // Cancels all running commands at the start of test mode.
         CommandScheduler.getInstance().cancelAll();
     }
-    
-    
+
+
     /** This method is called periodically during test mode. */
     @Override
     public void testPeriodic() {}
-    
-    
+
+
     /** This method is called once when the robot is first started up. */
     @Override
     public void simulationInit() {}
-    
-    
+
+
     /** This method is called periodically whilst in simulation. */
     @Override
     public void simulationPeriodic() {}

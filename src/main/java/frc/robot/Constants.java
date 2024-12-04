@@ -24,8 +24,8 @@ public final class Constants
     public static final int BNT_B = 2;
     public static final int BNT_X = 3;
 
-    public static final int LT = 3;
-    public static final int RT = 2;
+    public static final int LT = 2;
+    public static final int RT = 3;
 
     public static final int RIGHT_X = 4 ;
     public static final int RIGHT_Y = 5 ;
@@ -34,7 +34,13 @@ public final class Constants
 
     public static final int JOY_PORT = 0 ;
 
-    public static final double KpDist = 0.001;
+    public static final double KpDist = 0.03;
+
+    public static final String TAB_NAME = "Lime Data";
+    public static final String TX_ = "TX";
+    public static final String TY_ = "TY";
+    public static final String AREA_ = "Area";
+    public static final double LIME_SPD = 0.40;
 
 
 

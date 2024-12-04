@@ -10,6 +10,8 @@ public class Calcs {
     public double L_stickY, L_stickX, R_stickY, R_stickX;
     public double spd = 1;
     public int pov;
+    public boolean an_L = true;
+    public boolean an_R = true;
 
 
     public Calcs(double L_stickY, double L_stickX, double R_stickY, double R_stickX, double lt, double rt) {
@@ -25,103 +27,82 @@ public class Calcs {
     public void analogicValues() {
         this.mag1 = Math.hypot(L_stickX, L_stickY);
         this.mag2 = Math.hypot(R_stickX, R_stickY);
-        this.seno1 = mag1 > 0.04 ? L_stickY / mag1 : 0;
-        this.seno2 = mag2 > 0.04 ? R_stickY / mag2 : 0;
+        this.seno1 =  L_stickY / mag1;
+        this.seno2 =  R_stickY / mag2;
         this.lt = -lt;
     }
-public void activityAnalog(){
-        if(mag1 <0.04){
-            L_stickY = 0;
-            L_stickX = 0;
-            mag1 = 0;
 
-        } else if(mag2 < 0.04){
-            R_stickY = 0;
-            R_stickX = 0;
-            mag2 = 0;
+    public void  activityAnalog(){
+        double motors[] = new double[2];
+        if (mag1 > 0.04) {
+            an_L = true;
+            an_R = false;
+        }
+        else if (mag2 > 0.04) {
+            an_R = true;
+            an_L = false;
 
         }
-}
+        else {
+            motors[0] = 0.0;
+            motors[1] = 0.0;
+        }
 
-    public double[] tank() {
+    }
+    public double [] setdriver(){
+
+        double motors[] = new double[2];
         analogicValues();
         activityAnalog();
-        double[] motors = new double[2];
-        if (lt != 0) {
-            lt *= spd;
-        }
-        if (L_stickX >= 0.04) {
-            motors[0] = lt * (1 - L_stickX);
-            motors[1] = lt;
-        } else if (L_stickX < 0.04) {
-            motors[0] = lt;
-            motors[1] = lt * (1 + L_stickX);
-        }
 
-        if (rt != 0) {
-            rt *= spd;
-        }
-        if (R_stickX >= 0.04) {
-            motors[0] = rt * spd;
-            motors[1] = rt * (1 - R_stickX) * spd;
-        }
-        if (R_stickX < 0.04) {
-            motors[0] = rt * (1 + R_stickX) * spd;
-            motors[1] = rt * spd;
-        }
-
-         // left analogic
+        //left analogic
         //quad1. x> 0 e y>0
-        if (L_stickX > 0 && L_stickY >= 0) {
-            motors[0] = mag1;
-            motors[1] = (2 * seno1 - 1) * mag1;
+        if(an_L == true){
+            if (L_stickX >= 0 && L_stickY >= 0) {
+                motors[0] = mag1;
+                motors[1] = seno1*mag1;
+            }
+            // quad2. x<0 e y>0
+            else if (L_stickX < 0 && L_stickY >= 0) {
+                motors[0] = (2 * seno1 - 1) * mag1;
+                motors[1] = mag1;
+            }
+            // quad3. x>0 e y<0
+            else if (L_stickX >= 0 && L_stickY < 0) {
+                motors[0] = -mag1;
+                motors[1] =(2 * seno1 + 1) * mag1;
+            }
+            // quad4. x<0 e y<0
+            else if (L_stickX < 0 && L_stickY < 0) {
+                motors[0] = seno1* mag1;
+                motors[1] = -mag1;
+            }
+
         }
-        // quad2. x<0 e y>0
-        if (L_stickX < 0 && L_stickY >= 0) {
-            motors[0] = (2 * seno1 - 1) * mag1;
-            motors[1] = mag1;
-        }
-        // quad3. x<0 e y<0
-        if (L_stickX < 0 && L_stickY <= 0) {
-            motors[0] = (2 * seno1 + 1) * mag1;
-            motors[1] = -mag1;
-        }
-        // quad4. x>0 e y<0
-        if (L_stickX > 0 && L_stickY <= 0) {
-            motors[0] = -mag1;
-            motors[1] = (2 * seno1 + 1) * mag1;
+        else if (an_R == true){
+            if (R_stickX >= 0 && R_stickY >= 0) {
+                motors[0] = -seno2 * mag2;
+                motors[1] = -mag2;
+            }
+            //quad2. x<0 e y>0
+            else if (R_stickX < 0 && R_stickY >= 0) {
+                motors[0] = -mag2;
+                motors[1] = -seno2 * mag2;
+            }
+            //quad3. x>0 e y<0
+            else if (R_stickX >= 0 && R_stickY < 0) {
+                motors[0] = -seno2 * mag2;
+                motors[1] = mag2;
+            }
+            //quad4. x<0 e y<0
+            else if (R_stickX < 0 && R_stickY < 0) {
+                motors[0] = mag2;
+                motors[1] = -seno2* mag2;
+            }
         }
 
-    return motors;
-
+        return motors;
     }
-
-    public void Right_analogic() {
-        double motors[] = new double[2];
-        seno1 = L_stickY / mag1;
-        //quad1. x>0 e y>0
-        if (R_stickX > 0 && R_stickY > 0) {
-            motors[0] = (-2 * seno2 + 1) * mag2;
-            motors[1] = -mag2;
-        }
-        //quad2. x<0 e y>0
-        if (R_stickX < 0 && R_stickY > 0) {
-            motors[0] = -mag2;
-            motors[1] = (-2 * seno2 + 1) * mag2;
-        }
-        //quad3. x<0 e y<0
-        if (R_stickX < 0 && R_stickY < 0) {
-            motors[0] = mag2;
-            motors[1] = (-2 * seno2 - 1) * mag2;
-        }
-        //quad4. x>0 e y<0
-        if (R_stickX > 0 && R_stickY < 0) {
-            motors[0] = (-2 * seno2 - 1) * mag2;
-            motors[1] = mag2;
-        }
-
-    }
-
 
     public static double[] calcPov ( int pov, double spd){
         double motors[] = new double[2];
@@ -178,3 +159,27 @@ public void activityAnalog(){
 
     }
 }
+
+/*if(lt !=0.04){
+    lt*=spd;
+
+}
+else if(lt >=0.04 && L_stickX >=0.04){
+    motors[1] = lt *spd;
+    motors[0] = lt * (1 - L_stickX)*spd ;
+}
+else if(L_stickX < 0.04 && lt > 0.04){
+    motors[1] = lt* (1 + L_stickX) *spd;
+    motors[0] = lt *spd;
+}
+if(rt!=0.04){
+    rt *=spd;
+}
+else if(L_stickX > 0.04 && rt > 0.04){
+    motors [1] = rt* (1 - L_stickX)*spd ;
+    motors[0] = rt*spd;
+}
+else if(L_stickX < 0.04 && rt > 0.04){
+    motors[1] = rt*spd ;
+    motors[0] = rt * (1 + L_stickX)*spd;
+}*/
